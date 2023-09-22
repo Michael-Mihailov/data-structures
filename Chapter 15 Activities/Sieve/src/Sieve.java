@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 
 /**
@@ -13,8 +13,13 @@ public class Sieve
         int n = in.nextInt();
 
         // Your work goes here
-        . . .
-
+        LinkedList<Integer> primeList = new LinkedList<>();
+        LinkedList<Integer> numList = new LinkedList<>();
+        
+        for (int i = 2; i <= n; i++)
+        {
+            numList.addLast(new Integer(i));
+        }
 
 
 
