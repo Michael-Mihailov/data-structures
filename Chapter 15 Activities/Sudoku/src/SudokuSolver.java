@@ -159,6 +159,8 @@ public class SudokuSolver {
             cols.get(nextCol).add(possibleNum);
             squares.get(sqr).add(possibleNum);
 
+            grid[nextRow][nextCol] = possibleNum;
+
             // recursively solve the board
             if (this.solve()) {
                 // the board is solved!
@@ -173,6 +175,8 @@ public class SudokuSolver {
                 rows.get(nextRow).remove(possibleNum);
                 cols.get(nextCol).remove(possibleNum);
                 squares.get(sqr).remove(possibleNum);
+
+                grid[nextRow][nextCol] = 0;
             }
         }
 
