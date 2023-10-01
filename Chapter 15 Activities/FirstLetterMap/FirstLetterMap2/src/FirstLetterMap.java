@@ -12,7 +12,8 @@ public class FirstLetterMap
 {
     public static void main(String[] args)
     {
-        String filename = "Chapter 15 Activities/FirstLetterMap/FirstLetterMap1/src/test1.txt";
+        //String filename = "Chapter 15 Activities/FirstLetterMap/FirstLetterMap1/src/test1.txt";
+        String filename = "test1.txt";
 
         try (Scanner in = new Scanner(new File(filename)))
         {

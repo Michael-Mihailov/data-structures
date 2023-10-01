@@ -12,8 +12,9 @@ public class FirstLetterMap
 {
     public static void main(String[] args)
     {
-        String filename = "Chapter 15 Activities/FirstLetterMap/FirstLetterMap1/src/test1.txt";
-
+        //String filename = "Chapter 15 Activities/FirstLetterMap/FirstLetterMap1/src/test1.txt";
+        String filename = "test1.txt";
+        
         try (Scanner in = new Scanner(new File(filename)))
         {
 
@@ -24,12 +25,15 @@ public class FirstLetterMap
             {
                 String word = clean(in.next());
                 Character c = word.charAt(0);
-
+                
                 // Update the map here
                 // Use the Java 8 merge method
                 if (map.get(c) == null) map.put(c, new TreeSet<String>());
-                map.merge(c, word, (v1, v2) -> v1 + ", " + v2);
-
+                TreeSet<String> wordSet = new TreeSet(); wordSet.add(word);
+                map.merge(c, wordSet, (v1, v2) -> {
+                    v1.add(v2.first());
+                    return v1;
+                    });
             }
 
             // Print the map here in this form

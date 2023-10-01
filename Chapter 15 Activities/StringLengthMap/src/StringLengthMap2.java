@@ -12,7 +12,8 @@ public class StringLengthMap2
 {
     public static void main(String[] args)
     {
-        String filename = "Chapter 15 Activities/StringLengthMap/src/test1.txt";
+        //String filename = "Chapter 15 Activities/StringLengthMap/src/test1.txt";
+        String filename = "test1.txt";
 
         try (Scanner in = new Scanner(new File(filename)))
         {
@@ -28,7 +29,10 @@ public class StringLengthMap2
                 // Update the map here
                 // Use the Java 8 merge() method
                 if (map.get(len) == null) map.put(len, word);
-                map.merge(len, word, (v1, v2) -> v1 + ", " + v2);
+                else
+                {
+                    map.merge(len, word, (v1, v2) -> v1 + ", " + v2);
+                }
             }
 
             // Print the strings, in increasing order of their length
