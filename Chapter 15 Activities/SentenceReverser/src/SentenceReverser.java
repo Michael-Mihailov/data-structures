@@ -35,9 +35,21 @@ public class SentenceReverser
                 sentanceStack.push(sentenceScanner.next() + " ");
             }
 
-            while (sentanceStack.size() > 0)
+            for (int i = sentanceStack.size(); i > 0; i--)
             {
-                sen += sentanceStack.pop();
+                String word = sentanceStack.pop();
+
+                if (i == sentanceStack.size()) // last
+                {
+                    word = word.substring(0, word.length() - 1);
+                    word = word.toLowerCase();
+                }
+                else if (i == 1) // first
+                {
+                    word = (word.charAt(0) + "").toUpperCase() + word.substring(1);
+                }
+
+                sen += word;
             }
             
 
