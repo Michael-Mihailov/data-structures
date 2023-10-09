@@ -19,8 +19,6 @@ public class SentenceReverser
         
         while (sentence.length() > 0)
         {
-            System.out.println(sentence + " :: " + answer);
-
             String s = sentence.substring(0, sentence.indexOf("."));
 
             sentence = sentence.substring(sentence.indexOf(".") + 1);
@@ -32,30 +30,40 @@ public class SentenceReverser
 
             while (sentenceScanner.hasNext())
             {
-                sentanceStack.push(sentenceScanner.next() + " ");
+                sentanceStack.push(sentenceScanner.next());
             }
-
-            for (int i = sentanceStack.size(); i > 0; i--)
+            
+            boolean first = true;
+            while (sentanceStack.size() > 0)
             {
                 String word = sentanceStack.pop();
 
-                if (i == sentanceStack.size()) // last
+                if (first)
                 {
-                    word = word.substring(0, word.length() - 1);
-                    word = word.toLowerCase();
-                }
-                else if (i == 1) // first
-                {
+                    first = false;
                     word = (word.charAt(0) + "").toUpperCase() + word.substring(1);
                 }
+                else
+                {
+                    word = " " + word;
+                }
+                if (sentanceStack.size() == 0)
+                {
+                    word = word.toLowerCase();
+                }
 
-                sen += word;
+
+                sen = sen + word;
             }
             
 
             sen += ".";
 
             answer += sen;
+            if (sentence.length() > 0)
+            {
+                answer += " ";
+            }
         }
 
 
