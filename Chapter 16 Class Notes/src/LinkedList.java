@@ -8,19 +8,34 @@ import java.util.NoSuchElementException;
 */
 public class LinkedList
 {
-
+    private Node first;
+    private Node last;
+    private int size;
 
     /**
         Constructs an empty linked list.
     */
-
-
-
+    public LinkedList()
+    {
+        first = null;
+        last = null;
+        size = 0;
+    }
+    
+    // return the size of the list
+    public int size()
+    {
+        return size;
+    }
 
     /**
         Returns the first element in the linked list.
         @return the first element in the linked list
     */
+    public Object getFirst()
+    {
+        return first.getData();
+    }
 
 
 
@@ -29,6 +44,16 @@ public class LinkedList
         Removes the first element in the linked list.
         @return the removed element
     */
+    public Object removeFirst()
+    {
+        if (first != null) size--;
+
+        Object o = first.getData();
+        first = first.getNext();
+        
+
+        return o;
+    }
 
 
 
@@ -38,7 +63,16 @@ public class LinkedList
         Adds an element to the front of the linked list.
         @param element the element to add
     */
+    public void addFirst(Object o)
+    {
+        size++;
 
+        Node n = new Node(o);
+        n.setNext(first);
+        first.setPrevious(n);
+
+        first = n;
+    }
 
 
 
@@ -47,23 +81,73 @@ public class LinkedList
         Returns an iterator for iterating through this list.
         @return an iterator for iterating through this list
     */
+    public ListIterator linkedListIterator()
+    {
+        return new LinkedListIterator(first);
+    }
 
 
 
 
 
     //Class Node
+    static class Node
+    {
+        private Node next;
+        private Node previous;
+        private Object data;
 
+        public Node(Object d)
+        {
+            setData(d);
+            next = null;
+            previous = null;
+        }
 
-    class LinkedListIterator //implements ListIterator
+        public void setNext(Node n)
+        {
+            next = n;
+        }
+
+        public void setPrevious(Node n)
+        {
+            previous = n;
+        }
+
+        public void setData(Object d)
+        {
+            data = d;
+        }
+
+        public Node getNext()
+        {
+            return next;
+        }
+
+        public Node getPrevious()
+        {
+            return previous;
+        }
+
+        public Object getData()
+        {
+            return data;
+        }
+    }
+
+    class LinkedListIterator implements ListIterator
     {
       //private data
-
+        Node currentNode;
 
         /**
             Constructs an iterator that points to the front
             of the linked list.
         */
+        public LinkedListIterator(Node start)
+        {
+            currentNode = start;
+        }
 
 
         /**
