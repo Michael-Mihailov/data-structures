@@ -20,6 +20,14 @@ public class LinkedListStack
      *
      * @param element the element to add
     */
+    public void push (Object o)
+    {
+        Node n = new Node();
+        n.data = o;
+        n.next = first;
+
+        first = n;
+    }
 
 
 
@@ -30,6 +38,15 @@ public class LinkedListStack
         Removes the element from the top of the stack.
         @return the removed element
     */
+    public Object pop()
+    {
+        if (empty()) throw new NoSuchElementException();
+
+        Object temp = first.data;
+        first = first.next;
+
+        return temp;
+    }
 
 
 
@@ -43,6 +60,10 @@ public class LinkedListStack
      *
      * @return true if the stack is empty
     */
+    public boolean empty()
+    {
+        return first == null;
+    }
 
 
     static class Node

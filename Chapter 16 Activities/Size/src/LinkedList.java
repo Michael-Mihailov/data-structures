@@ -24,7 +24,16 @@ public class LinkedList
     */
     public int size()
     {
-        . . .
+        int answer = 0;
+
+        Node pos = first;
+        while (pos != null)
+        {
+            answer++;
+            pos = first.next;
+        }
+
+        return answer;
     }
 
     /**

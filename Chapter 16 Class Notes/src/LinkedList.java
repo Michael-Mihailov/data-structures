@@ -36,6 +36,10 @@ public class LinkedList
     {
         return first.getData();
     }
+    public Object getLast()
+    {
+        return last.getData();
+    }
 
 
 
@@ -54,6 +58,16 @@ public class LinkedList
 
         return o;
     }
+    public Object removeLast()
+    {
+        if (last != null) size--;
+
+        Object o = last.getData();
+        last = last.getPrevious();
+        
+
+        return o;
+    }
 
 
 
@@ -65,6 +79,12 @@ public class LinkedList
     */
     public void addFirst(Object o)
     {
+        if (first == null)
+        {
+            first = new Node(o);
+            return;
+        }
+
         size++;
 
         Node n = new Node(o);
@@ -72,6 +92,22 @@ public class LinkedList
         first.setPrevious(n);
 
         first = n;
+    }
+    public void addLast(Object o)
+    {
+        if (size == 0)
+        {
+            addFirst(o);
+            return;
+        }
+
+        size++;
+
+        Node n = new Node(o);
+        n.setPrevious(last);
+        last.setNext(n);
+
+        last = n;
     }
 
 
@@ -138,7 +174,11 @@ public class LinkedList
     class LinkedListIterator implements ListIterator
     {
       //private data
-        Node currentNode;
+        private int index;
+        // will also need to access size
+        private Node currentNode;
+        private boolean canModify;
+
 
         /**
             Constructs an iterator that points to the front
@@ -146,6 +186,8 @@ public class LinkedList
         */
         public LinkedListIterator(Node start)
         {
+            index = 0;
+            canModify = false;
             currentNode = start;
         }
 
@@ -154,6 +196,24 @@ public class LinkedList
             Moves the iterator past the next element.
             @return the traversed element
         */
+        public Object next() // add error
+        {
+            index++;
+            canModify = true;
+
+            currentNode = currentNode.getNext();
+            
+            return currentNode.getData();
+        }
+        public Object previous() // add error
+        {
+            index--;
+            canModify = true;
+
+            currentNode = currentNode.getPrevious();
+
+            return currentNode.getData();
+        }
 
 
 
@@ -163,13 +223,40 @@ public class LinkedList
             Tests if there is an element after the iterator position.
             @return true if there is an element after the iterator position
         */
-
+        public boolean hasNext()
+        {
+            return currentNode.getNext() != null;
+        }
 
         /**
             Adds an element before the iterator position
             and moves the iterator past the inserted element.
             @param element the element to add
         */
+        public void add(Object o)
+        {
+            if (index == 0)
+            {
+                addFirst(o);
+                currentNode = first;
+            }
+            else if (index == size)
+            {
+                addLast(o);
+            }
+            else
+            {
+                Node n = new Node(o);
+                n.setPrevious(currentNode.getPrevious());
+                n.setNext(currentNode);
+                currentNode.setPrevious(n);
+                
+                currentNode = n;
+            }
+
+            size++;
+            canModify = false;
+        }
 
 
 
@@ -180,6 +267,35 @@ public class LinkedList
             Removes the last traversed element. This method may
             only be called after a call to the next() method.
         */
+        public void remove()
+        {
+            if (!canModify)
+            {
+                // error
+                return;
+            }
+
+            if (index == 0)
+            {
+                removeFirst();
+                currentNode = first;
+            }
+            else if (index == size)
+            {
+                removeLast();
+                currentNode = last;
+            }
+            else
+            {
+                currentNode.getPrevious().setNext(currentNode.getNext());
+                currentNode.getNext().setPrevious(currentNode.getPrevious());
+
+                currentNode = currentNode.getNext();
+            }
+
+            size--;
+            canModify = true;
+        }
 
 
 
@@ -191,6 +307,13 @@ public class LinkedList
             Sets the last traversed element to a different value.
             @param element the element to set
         */
+        public void set(Object o)
+        {
+            if (canModify)
+                currentNode.setData(o);
+            else;
+                // error
+        }
 
 
 
