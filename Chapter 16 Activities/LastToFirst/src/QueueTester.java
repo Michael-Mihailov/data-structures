@@ -6,12 +6,15 @@ public class QueueTester
     public static void main(String[] args)
     {
         LinkedListQueue q = new LinkedListQueue();
+        
         q.add("Tom");
         q.add("Diana");
         q.add("Harry");
         q.lastToFirst();
         q.add("Sarah");
         q.add("John");
+        
+
 
         int i = 0;
         while (!q.empty())

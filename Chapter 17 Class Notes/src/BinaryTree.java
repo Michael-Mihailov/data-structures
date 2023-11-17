@@ -10,7 +10,7 @@ public class BinaryTree
     */
     public BinaryTree()
     {
-         
+         this.root = null;
     } 
 
     /**
@@ -19,7 +19,10 @@ public class BinaryTree
     */
     public BinaryTree(Object rootData) 
     {
-        
+        root = new Node();
+        root.data = rootData;
+        root.left = null;
+        root.right = null;
     }
 
     /**
@@ -30,12 +33,16 @@ public class BinaryTree
     */
     public BinaryTree(Object rootData, BinaryTree left, BinaryTree right)
     {
-        
+        this(rootData);
+        root.left = left.root;
+        root.right = right.root;
     }
     
     static class Node
     {
-        
+        public Object data;
+        public Node left;
+        public Node right;
     }
 
     /**
@@ -45,7 +52,9 @@ public class BinaryTree
     */
     private static int height(Node n)
     {
-        return 0;
+        if (n == null) return 0;
+
+        return 1 + (height(n.left) > height(n.right) ? height(n.left) : height(n.right));
     }
 
     /**
@@ -54,7 +63,7 @@ public class BinaryTree
     */
     public int height()
     {
-        return 0;
+        return height(root);
     }
 
     /**
@@ -63,7 +72,7 @@ public class BinaryTree
     */
     public boolean isEmpty()
     {
-         return false;
+        return this.root == null;
     }
 
     /**
@@ -72,7 +81,7 @@ public class BinaryTree
     */
     public Object data()
     {
-         return null;
+         return this.root.data;
     }
     
     /**
@@ -81,7 +90,9 @@ public class BinaryTree
     */
     public BinaryTree left() 
     { 
-        return null;
+        BinaryTree t = new BinaryTree();
+        t.root = this.root.left;
+        return t;
     }
 
     /**
@@ -90,6 +101,8 @@ public class BinaryTree
     */
     public BinaryTree right() 
     { 
-        return null;
+        BinaryTree t = new BinaryTree();
+        t.root = this.root.right;
+        return t;
     }
 }

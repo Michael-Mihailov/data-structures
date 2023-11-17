@@ -1,3 +1,5 @@
+import java.lang.Comparable;
+
 /**
     This class implements a binary search tree whose
     nodes hold objects that implement the Comparable
@@ -12,7 +14,7 @@ public class BinarySearchTree
     */
     public BinarySearchTree()
     {   
-        
+        root = null;
     }
     
     /**
@@ -21,7 +23,9 @@ public class BinarySearchTree
     */
     public void add(Comparable obj) 
     {   
-        
+        Node n = new Node(); 
+        n.data = obj; n.left = null; n.right = null;
+        root.addNode(n);
     }
 
     /**
@@ -31,6 +35,19 @@ public class BinarySearchTree
     */
     public boolean find(Comparable obj)
     {
+        Node c = root;
+        while (c != null)
+        {
+            int d = obj.compareTo(c.data);
+            if (d == 0)
+                return true;
+
+            if (d < 0)
+                c = c.left;
+            else
+                c = c.right;
+        }
+
         return false;
     }
     
@@ -41,7 +58,75 @@ public class BinarySearchTree
     */
     public void remove(Comparable obj)
     {
+        Node r = root;
+        Node p = null;
+        boolean found = false;
+
+        while (!found && r != null)
+        {
+            int diff = obj.compareTo(r.data);
+            if (diff == 0)
+                found = true;
+            else{
+                p = r;
+                if (diff < 0)
+                    r = r.left;
+                else
+                    r = r.right;
+            }
+        }
+
+        if (!found)
+            return;
+
+        if (r.left == null || r.right == null)
+        {
+            Node newChild;
+
+            if (r.left == null)
+            {
+                newChild = r.right;
+            }
+            else
+            {
+                newChild = r.left;
+            }
+
+            if (p == null)
+            {
+                root = newChild;
+            }
+            else if (p.left == r)
+            {
+                p.left = newChild;
+            }
+            else
+            {
+                p.right = newChild;
+            }
+
+            return; //?
+        }
+
+        Node leastParent = r;
+        Node least = r.right;
+        while(least.left != null)
+        {
+            leastParent = least;
+            least = least.left;
+        }
+        r.data = least.data;
+        if (leastParent == r)
+        {
+            leastParent.right = least.right;
+        }
+        else
+        {
+            leastParent.left = least.right;
+        }
+
         
+
     }
     
     /**
@@ -49,7 +134,7 @@ public class BinarySearchTree
     */
     public void print()
     {   
-        
+        print(root);
     }   
 
     /**
@@ -58,7 +143,12 @@ public class BinarySearchTree
     */
     private static void print(Node parent)
     {   
+        if (parent == null)
+            return;
         
+        print(parent.left);
+        System.out.println(parent.data);
+        print(parent.right);
     }
 
     /**
@@ -67,7 +157,10 @@ public class BinarySearchTree
     */
     static class Node
     {   
-        
+        public Comparable data;
+        public Node left;
+        public Node right;
+
 
         /**
             Inserts a new node as a descendant of this node.
@@ -75,7 +168,25 @@ public class BinarySearchTree
         */
         public void addNode(Node newNode)
         {   
-            
+            int diff = newNode.data.compareTo(data);
+
+            if (diff < 0)
+            {
+                if (left == null)
+                    left = newNode;
+                else
+                    left.addNode(newNode);
+                
+                return;
+            }
+
+            if (diff > 0)
+            {
+                if (right == null)
+                    right = newNode;
+                else
+                    right.addNode(newNode);
+            }
         }
     }
 }
