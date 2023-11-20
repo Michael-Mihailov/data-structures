@@ -84,14 +84,11 @@ public class MorseCode
      */
     private static void treeInsert(char letter, String code) // - is less than .
     {
-        String tempCode = code;
-
         TreeNode current = decodeTree;
 
-        while (tempCode.length()  > 0)
+        for (int i = 0; i < code.length(); i++)
         {
-            char c = tempCode.charAt(0);
-            tempCode = tempCode.substring(1);
+            char c = code.charAt(i);
 
             if (c == DOT) // go left
             {
@@ -113,7 +110,7 @@ public class MorseCode
             }
         }
         
-        current = new TreeNode(code, current.getLeft(), current.getRight());
+        current.setValue(letter);
     }
 
     /**
@@ -124,6 +121,8 @@ public class MorseCode
      */
     public static String encode(String text)
     {
+        text = text.toUpperCase();
+
         StringBuffer morse = new StringBuffer(400);
 
         for (int i = 0; i < text.length() ; i++)
@@ -150,7 +149,7 @@ public class MorseCode
      */
     public static String decode(String morse)
     {
-        System.out.println("morse " + morse);
+        System.out.println(morse); // debug
 
         StringBuffer text = new StringBuffer(100);
 
@@ -161,12 +160,15 @@ public class MorseCode
             {
                 letter = " ";
                 morse = morse.substring(1);
+
+                System.out.println("space"); // debug
             }
             else
             {
                 if (morse.indexOf(" ") == -1)
                 {
                     letter = morse;
+                    System.out.println("Hi"); //debug
                 }
                 else
                 {
@@ -193,7 +195,9 @@ public class MorseCode
                     }
                 }
 
-                letter = (String)current.getValue();
+                letter = (current.getValue()).toString();
+
+                System.out.println("Letter: " + letter); //debug
             }
             
             text.append(letter);
